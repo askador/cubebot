@@ -1,0 +1,7 @@
+aiogram==2.18
+loguru==0.5.3
+aioredis==2.0.1
+autopep8==1.6.0
+environs==9.4.0
+sqlalchemy==1.4.29
+aioredis==2.0.1

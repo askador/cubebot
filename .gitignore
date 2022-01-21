@@ -1,0 +1,26 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# app logs
+logs*/
+
+# pyenv
+.python-version
+
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow
+__pypackages__/
+
+# Environments
+.venv
+venv
+*/.env
+.env
+env/
+venv/
+
+# IDEs settings
+.idea/
+.vscode/
+
+# run file
+run.txt

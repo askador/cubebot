@@ -1,0 +1,13 @@
+{
+    "hi": "Привет ${name}!",
+    "plural": {
+        "template": "У вас ${amount} ${form}",
+        "forms": ["яблоко", "яблока", "яблок"]
+    },
+    "simple": "простой перевод",
+    "two_args": "${first} {$second}",
+    "incorrect_plural": {
+        "template": "У вас ${amount} ${form}",
+        "forms": ["мяч", "мяча"]
+    }
+}
