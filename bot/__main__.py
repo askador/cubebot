@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import asyncio
 
 from loguru import logger
@@ -53,18 +54,11 @@ async def main():
         await dp.reset_webhook()
         await dp.start_polling()
     finally:
-        await asyncio.sleep(1)
-        logger.info("Stopping bot")
+        logger.warning("Stopping bot")
         await dp.storage.close()
         await dp.storage.wait_closed()
-        await bot.get_session().close() # type: ignore the line.
+        await bot.get_session().close() # type: ignore
 
 
 if __name__ == '__main__':
-    try:
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        loop.run_until_complete(main())
-        loop.close()
-    except (KeyboardInterrupt, SystemExit):
-        logger.error("Bot stopped!")
+    asyncio.run(main())
