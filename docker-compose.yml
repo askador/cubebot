@@ -1,15 +1,17 @@
 version: '3'
 
 services:
-    # bot:
-    #     container_name: cubebot
-    #     image: askador/cubebot
-    #     build:
-    #         context: .
-    #     env_file: .env
-    #     restart: always
-    #     depends_on:
-    #       - mysql_db
+    bot:
+        container_name: cubebot
+        image: askador/cubebot
+        build:
+            context: .
+        env_file: .env
+        restart: unless-stopped
+        depends_on:
+            - postgresql
+        volumes:
+            - ./:/cubebot
 
     postgresql:
         container_name: postgresql
@@ -36,24 +38,6 @@ services:
                     cpus: '1'
                     memory: 4G
             
-    # pgadmin:
-    #     container_name: pgadmin_container
-    #     image: dpage/pgadmin4:5.7
-    #     environment:
-    #         PGADMIN_DEFAULT_EMAIL: "fedosov0912@gmail.com"
-    #         PGADMIN_DEFAULT_PASSWORD: "password"
-    #         PGADMIN_CONFIG_SERVER_MODE: "False"
-    #     volumes:
-    #         - ./pgadmin:/var/lib/pgadmin
-    #     ports:
-    #         - "5050:80"
-    #     restart: unless-stopped
-    #     deploy:
-    #         resources:
-    #             limits:
-    #                 cpus: 0.5
-    #                 memory: 1G
-    #     networks:
-    #         - postgres
 volumes:
     pg_data:
+    bot_data:
