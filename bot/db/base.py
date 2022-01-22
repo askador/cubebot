@@ -1,3 +1,4 @@
+import sys
 from loguru import logger
 
 from sqlalchemy.orm import sessionmaker
@@ -16,8 +17,12 @@ async def create_pool(db: DB):
     engine = create_async_engine(url=make_url(connection_uri))
     pool: sessionmaker = sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False, autoflush=False)
 
-    async with pool() as pool:
-        await pool.execute("SELECT 1+1 AS RESULT")
+    try:
+        async with pool() as pool:
+            await pool.execute("SELECT 1+1 AS RESULT") # type: ignore
+    except Exception as e:
+        logger.exception(e)
+        sys.exit()
 
     return pool
 
