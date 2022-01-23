@@ -19,7 +19,7 @@ class Redis:
 
 
 @dataclass
-class DB:
+class Database:
     host: str
     port: int
     name: str
@@ -51,7 +51,7 @@ class Middlewares:
 class Config:
     bot: TgBot
     redis: Redis
-    db: DB
+    db: Database
     logging: Logging
     middlewares: Middlewares
 
@@ -71,7 +71,7 @@ def load_config() -> Config:
             db=env.int("REDIS_DB_FSM"),
             password=env.str("REDIS_PASSWORD")
         ),
-        db=DB(
+        db=Database(
             host=env.str("DB_HOST"),
             port=env.int("DB_PORT"),
             name=env.str("DB_NAME"),
