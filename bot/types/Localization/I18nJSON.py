@@ -50,7 +50,7 @@ class I18nJSON:
             return
         if len(keys) == 1:
             return resources.get(keys[0])
-        return str(await I18nJSON.get_template(keys[1:], resources.get(keys[0], {})))
+        return await I18nJSON.get_template(keys[1:], resources.get(keys[0], {}))
 
     @staticmethod
     async def get_plural_forms(keys: list, resources: Optional[Dict[str, Any]]) -> Optional[List[str]]:
@@ -68,9 +68,18 @@ class I18nJSON:
             template = await self.get_template(keys.split('.'), resources)
         else:    
             try:
-                forms = await self.get_plural_forms(f"{keys}.forms".split('.'), resources)
-                plural_form = await pluralize(self.language_key, template_data.get("amount"), forms) #type: ignore
-                template = await self.get_template(f"{keys}.template".split('.'), resources)
+                forms       = await self.get_plural_forms(
+                                        f"{keys}.forms".split('.'), 
+                                        resources)
+                plural_form = await pluralize(
+                                        self.language_key, 
+                                        template_data.get("amount"), #type: ignore
+                                        forms) 
+                                        
+                template    = await self.get_template(
+                                        f"{keys}.template".split('.'), 
+                                        resources)
+
                 template_data['form'] = plural_form
             except AttributeError:
                 if self.allow_missing_plural:
@@ -86,6 +95,9 @@ class I18nJSON:
                     raise ValueError(
                         f"Incorrect filling of pluralization forms for {self.language_key}.{keys}"
                     )
+        
+        if type(template) is list:
+            template = ''.join(template)
 
         if not template and self.allow_missing_translation:
             template = f"{self.language_key}.{keys}"
