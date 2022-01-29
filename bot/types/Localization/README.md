@@ -18,7 +18,7 @@
 ```json 
 { 
     "<your command>": [
-        "<your\n",
+        "<your \n",
         "template>"
     ]
 }
