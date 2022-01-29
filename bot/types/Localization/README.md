@@ -14,6 +14,15 @@
     }
 }
 ```
+- For multiline forms use template: 
+```json 
+{ 
+    "<your command>": [
+        "<your\n",
+        "template>"
+    ]
+}
+```
 - Order is important.
 [one, many, ...]
 
@@ -25,7 +34,11 @@ en.json
     "basket": {
         "template": "You have ${amount} ${form} in your basket",
         "forms": ["apple", "apples"]
-    }
+    },
+    "present": [
+        "You have resieved\n",
+        "COOL PRESENT"
+    ]
 }
 ```
 ```python
@@ -37,8 +50,11 @@ i18n = I18nJSON(config: I18nConfig)
 async def main():
     print(i18n.t('greeting', {name="User"}))
     print(i18n.t('basket', {amount=2}))
+    print(i18n.t('present'))
 ```
 ```bash
 Output: Hello User!
 Output: You have 2 apples in yor basket
+Output: You have resieved
+...     COOL PRESENT
 ```
