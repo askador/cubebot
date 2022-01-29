@@ -1,9 +1,0 @@
-{
-    "hi": "Hello {name}!",
-    "plural": {
-        "template": "You have ${amount} ${form}",
-        "forms": ["apple", "apples"]
-    },
-    "simple": "simple translation",
-    "two_args": "${first} {$second}"
-}
