@@ -24,3 +24,6 @@ venv/
 
 # run file
 run.txt
+
+# stuff
+.stuff/
