@@ -1,7 +1,6 @@
 # -*- encoding: utf-8 -*-
 import sys
 
-from dataclasses import dataclass
 from pathlib import Path
 from unittest import IsolatedAsyncioTestCase
 
@@ -92,3 +91,17 @@ class TestTranslationFormat(IsolatedAsyncioTestCase):
         self.i18n.allow_missing_plural = False
         with self.assertRaises(ValueError):
             await self.i18n.t('incorrect_plural', {"amount": 0})
+
+    async def test_multiline_string(self):
+        self.i18n.allow_missing_translation = True # type: ignore
+        self.i18n.allow_missing_placeholder = True # type: ignore
+        self.i18n.allow_missing_plural = False
+        self.i18n.set_language('ru')
+        self.assertEqual(await self.i18n.t('multiline_string'), "multiline\nstring")
+
+    async def test_multiline_string_plural(self):
+        self.i18n.allow_missing_translation = True # type: ignore
+        self.i18n.allow_missing_placeholder = True # type: ignore
+        self.i18n.allow_missing_plural = False
+        self.i18n.set_language('ru')
+        self.assertEqual(await self.i18n.t('multiline_string_plural', {"amount": 0}), "У вас\n0 мячей")
