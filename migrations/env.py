@@ -7,13 +7,13 @@ from alembic import context
 
 import bot.db.models
 from bot.db.base import Base
-from bot.data.config import load_config
+from bot.data.config import config as _config 
 
 
 config = context.config
 fileConfig(config.config_file_name) #type:ignore
 target_metadata = Base.metadata
-db_config = load_config().db
+db_config = _config.db
 config.set_main_option(
     "sqlalchemy.url", 
     f"postgresql://{db_config.user}:{db_config.password}@{db_config.host}:{db_config.port}/{db_config.name}"
