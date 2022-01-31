@@ -10,7 +10,7 @@
 { 
     "<your command>": {
         "template": "<your template>",
-        "forms": [<your forms>]
+        "forms": ["<your form1>", "<your form2>", ...]
     }
 }
 ```
@@ -36,7 +36,7 @@ en.json
         "forms": ["apple", "apples"]
     },
     "present": [
-        "You have resieved\n",
+        "You have received\n",
         "COOL PRESENT"
     ]
 }
@@ -48,13 +48,13 @@ from bot.data.config import I18nConfig
 i18n = I18nJSON(config: I18nConfig)
 
 async def main():
-    print(i18n.t('greeting', {name="User"}))
-    print(i18n.t('basket', {amount=2}))
-    print(i18n.t('present'))
+    print(await i18n.t('greeting', {name="User"}))
+    print(await i18n.t('basket', {amount=2}))
+    print(await i18n.t('present'))
 ```
 ```bash
 Output: Hello User!
 Output: You have 2 apples in yor basket
-Output: You have resieved
+Output: You have received
 ...     COOL PRESENT
 ```
