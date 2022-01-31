@@ -6,9 +6,12 @@ async def set_bot_commands(bot: Bot):
     data = [
         (
             [
-                BotCommand("start", "New Game"),
-                BotCommand("help", "How to play Bombsweeper?"),
-                BotCommand("stats", "Your personal statistics")
+                BotCommand("start", "Приветственное сообщение"),
+                BotCommand("help", "Помощь"),
+                BotCommand("game", "Начать новую игру"),
+                BotCommand("roll", "Бросить кости"),
+                BotCommand("money", "Просмотреть баланс"),
+                BotCommand("profile", "Профиль игрока"),
             ],
             BotCommandScopeDefault(),
             None
