@@ -3,9 +3,8 @@ from sys import exit
 from socket import gaierror
 from asyncpg.exceptions import InvalidPasswordError, InvalidCatalogNameError
 
-from sqlalchemy import text
+from sqlalchemy.sql import text
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.engine.url import make_url
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 
@@ -23,6 +22,7 @@ async def create_pool(db: Database):
         async with engine.begin() as conn:
             # initialize all tables
             await conn.run_sync(Base.metadata.create_all)
+            # await conn.run_sync(text("SELECT 1+1 AS RESULT"))
     except gaierror as addrexc:
         logger.exception("host is invalid", addrexc)
         exit()
