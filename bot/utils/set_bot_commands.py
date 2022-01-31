@@ -12,6 +12,7 @@ async def set_bot_commands(bot: Bot):
                 BotCommand("roll", "Бросить кости"),
                 BotCommand("money", "Просмотреть баланс"),
                 BotCommand("profile", "Профиль игрока"),
+                BotCommand("issue", "Сообщить о проблеме с ботом"),
             ],
             BotCommandScopeDefault(),
             None
