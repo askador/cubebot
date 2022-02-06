@@ -21,6 +21,7 @@ class I18nJSON:
         self.locales = {}
         self.load_locales()
 
+
     def load_locales(self) -> None:
         locale_files = self.locales_path.glob(f'*.{self.file_extension}')
         for file in locale_files:
@@ -31,6 +32,7 @@ class I18nJSON:
 
     def get_locales(self) -> dict:
         return self.locales
+
 
     def set_language(self, language_key: str) -> None:
         if language_key in self.locales:
@@ -44,6 +46,7 @@ class I18nJSON:
     def get_language(self) -> str:
         return self.language_key
 
+
     @staticmethod
     async def get_template(keys: list, resources: Optional[Dict[str, Any]]) -> Optional[str]:
         if not resources or not len(keys) or type(resources) is not dict:
@@ -51,6 +54,7 @@ class I18nJSON:
         if len(keys) == 1:
             return resources.get(keys[0])
         return await I18nJSON.get_template(keys[1:], resources.get(keys[0], {}))
+
 
     @staticmethod
     async def get_plural_forms(keys: list, resources: Optional[Dict[str, Any]]) -> Optional[List[str]]:
