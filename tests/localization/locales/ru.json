@@ -5,15 +5,18 @@
         "forms": ["яблоко", "яблока", "яблок"]
     },
     "simple": "простой перевод",
-    "two_args": "${first} {$second}",
+    "use_default_language": "дефолтный перевод",
+    "two_args": "${first} ${second}",
     "incorrect_plural": {
         "template": "У вас ${amount} ${form}",
         "forms": ["мяч", "мяча"]
     },
     "multiline_string": [
+        "some\n\n",
         "multiline\n",
         "string"
     ],
+    
     "multiline_string_plural": {
         "template": [
             "У вас\n",

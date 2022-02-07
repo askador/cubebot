@@ -1,3 +1,7 @@
+from typing import Optional, Union
+
+
+
 def english(n: int) -> int:
     return 1 if n != 1 else 0
 
@@ -27,7 +31,7 @@ def chinese(n: int) -> int:
 
 def arabic(n: int) -> int:
     if n >= 0 and n < 3:
-      return n
+      return int(n)
     if n % 100 <= 10:
       return 3
     if n >= 11 and n % 100 <= 99:
@@ -44,12 +48,6 @@ pluralRules = {
   'chinese': chinese,
   'arabic': arabic
 }
-
-
-
-from array import array
-from asyncio.log import logger
-from typing import Optional
 
 
 mapping = {
@@ -72,16 +70,15 @@ def get_lang(code: str) -> Optional[str]:
     return None
 
 
-async def pluralize(code: str, number: int, forms) -> str:
+def pluralize(code: str, number: int, forms) -> str:
     key = get_lang(code)
 
     if not key:
-        raise ValueError(f'Unsupported language ${code}')
+        raise ValueError(f'Unsupported language {code}')
 
     try:
         form = forms[pluralRules[key](number)]
-    except IndexError:
+    except (IndexError, TypeError):
         raise ValueError("Incorrect filling of pluralization forms")
         
-    # return form(number) if type(form) == 'function' else f'{number} {form}'
     return form

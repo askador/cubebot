@@ -1,21 +1,26 @@
-# Localization rules
+# I18nJSON use
+
 - For default forms use template:
+
 ```json
 {
     "<your command>": "<your template>"
 }
 ```
-- For plural forms use template: 
-```json 
+
+- For plural forms use template:
+
+```json
 { 
     "<your command>": {
         "template": "<your template>",
-        "forms": ["<your form1>", "<your form2>", ...]
+        "forms": ["<your form1>", "<your form2>", etc...]
     }
 }
 ```
-- For multiline forms use template: 
-```json 
+- For multiline forms use template:
+
+```json
 { 
     "<your command>": [
         "<your \n",
@@ -23,11 +28,13 @@
     ]
 }
 ```
-- Order is important.
-[one, many, ...]
+
+- Order is important [one, many, etc...]
 
 ## Example
+
 en.json
+
 ```json
 {
     "greeting": "Hello ${name}!",
@@ -41,6 +48,7 @@ en.json
     ]
 }
 ```
+
 ```python
 from bot.types.Localization import I18nJSON
 from bot.data.config import I18nConfig
@@ -49,9 +57,10 @@ i18n = I18nJSON(config: I18nConfig)
 
 async def main():
     print(await i18n.t('greeting', {name="User"}))
-    print(await i18n.t('basket', {amount=2}))
+    print(await i18n.t('basket', amount=2))
     print(await i18n.t('present'))
 ```
+
 ```bash
 Output: Hello User!
 Output: You have 2 apples in yor basket
