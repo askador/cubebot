@@ -10,7 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from bot.db.models import Game
 from bot.filters import StrictCommand
 from bot.types.Localization import I18nJSON
-from bot.keyboards.inline import game_kb
+from bot.keyboards.inline import new_game_kb
 from bot.utils.throttling import rate_limit
 
 @rate_limit()
@@ -28,7 +28,7 @@ async def new_game(message: types.Message, i18n: I18nJSON, session: AsyncSession
     session.add(Game(chat_id=chat_id))
     await session.commit()
 
-    await message.answer(i18n.t('commands.game.message'), reply_markup=game_kb())
+    await message.answer(i18n.t('commands.game.message'), reply_markup=new_game_kb())
 
 
 def register(dp: Dispatcher):
