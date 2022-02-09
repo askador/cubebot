@@ -1,14 +1,10 @@
 from aiogram import types
 from aiogram.dispatcher.filters import BoundFilter
 
-from bot.data import config
+from bot.data.config import config
 
-
-class AdminFilter(BoundFilter):
-    key = 'is_admin'
-
-    def __init__(self, is_admin):
-        self.is_admin = is_admin
-
-    async def check(self, message: types.Message):
-        return message.from_user.id in config.admins
+admins = config.bot.admins
+ 
+class IsBotAdmin(BoundFilter):
+    async def check(self, message: types.Message) -> bool:
+        return message.from_user.id in admins
