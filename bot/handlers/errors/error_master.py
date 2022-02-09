@@ -1,20 +1,22 @@
 from loguru import logger
+from time import sleep
 from aiogram.types import Update
-from aiogram.utils.exceptions import (Unauthorized, Throttled, ChatNotFound, 
-                                      StartParamInvalid, TelegramAPIError,
-                                      MessageNotModified, MessageToDeleteNotFound,
-                                      MessageCantBeEdited, MessageToEditNotFound,
-                                      MessageTextIsEmpty, RetryAfter,
-                                      CantParseEntities, MessageCantBeDeleted, 
-                                      ValidationError, FSMStorageWarning, 
-                                      TimeoutWarning, AIOGramWarning, 
-                                      BotKicked, BotBlocked, 
-                                      UserDeactivated, NetworkError,
-                                      MessageIdInvalid, MessageToReplyNotFound
-                                      )
+from aiogram.utils.exceptions import (
+    Unauthorized, Throttled, ChatNotFound, 
+    StartParamInvalid, TelegramAPIError,
+    MessageNotModified, MessageToDeleteNotFound,
+    MessageCantBeEdited, MessageToEditNotFound,
+    MessageTextIsEmpty, RetryAfter,
+    CantParseEntities, MessageCantBeDeleted, 
+    ValidationError, FSMStorageWarning, 
+    TimeoutWarning, AIOGramWarning, 
+    BotKicked, BotBlocked, 
+    UserDeactivated, NetworkError,
+    MessageIdInvalid, MessageToReplyNotFound
+)
 
 
-async def errors_handler(update: Update, exception):
+async def errors_handler(update: Update, exception, *args, **kwargs):
     """
     Exceptions handler. Catches all exceptions within task factory tasks.
     :param update:
@@ -31,7 +33,7 @@ async def errors_handler(update: Update, exception):
         return True
 
     if isinstance(exception, ChatNotFound):
-        logger.error(f"ChatNotFound: {exception} \nUpdate: {update}")
+        logger.exception(f"ChatNotFound: {exception} \nUpdate: {update}")
         return True
 
     if isinstance(exception, UserDeactivated):
@@ -83,11 +85,12 @@ async def errors_handler(update: Update, exception):
         return True
 
     if isinstance(exception, TelegramAPIError):
-        logger.exception(f'TelegramAPIError: {exception} \nUpdate: {update}')
+        logger.error(f'TelegramAPIError: {exception} \nUpdate: {update}')
         return True
 
     if isinstance(exception, RetryAfter):
         logger.error(f'RetryAfter: {exception} \nUpdate: {update}')
+        sleep(exception.timeout)
         return True
 
     if isinstance(exception, CantParseEntities):
@@ -95,15 +98,15 @@ async def errors_handler(update: Update, exception):
         return True
 
     if isinstance(exception, FSMStorageWarning):
-        logger.exception(f'FSMStorageWarning: {exception} \nUpdate: {update}')
+        logger.warning(f'FSMStorageWarning: {exception} \nUpdate: {update}')
         return True
 
     if isinstance(exception, TimeoutWarning):
-        logger.exception(f'TimeoutWarning: {exception} \nUpdate: {update}')
+        logger.warning(f'TimeoutWarning: {exception} \nUpdate: {update}')
         return True
 
     if isinstance(exception, AIOGramWarning):
-        logger.exception(f'AIOGramWarning: {exception} \nUpdate: {update}')
+        logger.warning(f'AIOGramWarning: {exception} \nUpdate: {update}')
         return True
 
     if isinstance(exception, BotKicked):
@@ -115,3 +118,4 @@ async def errors_handler(update: Update, exception):
         return True
 
     logger.exception(f'Update: {update} \n{exception}')
+    return True
