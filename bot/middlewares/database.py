@@ -1,5 +1,6 @@
 from aiogram.dispatcher.middlewares import LifetimeControllerMiddleware
 from aiogram.types.base import TelegramObject
+from loguru import logger
 from sqlalchemy.orm import Session, sessionmaker
 
 
