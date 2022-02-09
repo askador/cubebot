@@ -12,7 +12,7 @@ from bot.data.config import Database
 
 Base = declarative_base()
 
-async def create_pool(db: Database):
+async def create_pool(db: Database) -> sessionmaker:
     logger.info("Establishing database pool")
 
     connection_uri = f"postgresql+asyncpg://{db.user}:{db.password}@{db.host}:{db.port}/{db.name}"
