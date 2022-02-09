@@ -33,7 +33,7 @@ class TestTranslationFormat(TestCase):
 
     def test_missing_translation_error(self):
         i18n = I18nJSON(self.config)
-        i18n.allow_missing_translation = False # type: ignore
+        i18n.allow_missing_translation = False
         i18n.set_language('ru')
         with self.assertRaises(KeyError):
             i18n.t('inexistent')
@@ -55,7 +55,7 @@ class TestTranslationFormat(TestCase):
 
     def test_language_value_error(self):
         i18n = I18nJSON(self.config)
-        i18n.allow_missing_translation = False # type: ignore
+        i18n.allow_missing_translation = False
         with self.assertRaises(ValueError):
             i18n.set_language('asd')
 
@@ -72,7 +72,7 @@ class TestTranslationFormat(TestCase):
     def test_missing_placeholder_error(self):
         i18n = I18nJSON(self.config)
         i18n.set_language('ru')
-        i18n.allow_missing_placeholder = False # type: ignore
+        i18n.allow_missing_placeholder = False
         with self.assertRaises(KeyError):
             i18n.t('hi')
 
