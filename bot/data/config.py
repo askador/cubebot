@@ -36,8 +36,9 @@ class Logging:
 
 @dataclass
 class I18nConfig:
-    default_language: str
     locales_path: Path
+    default_language: str
+    use_default_language_on_missing: bool
     allow_missing_translation: bool
     allow_missing_placeholder: bool
     allow_missing_plural: bool
@@ -47,25 +48,25 @@ class I18nConfig:
 class Middlewares:
     i18n: I18nConfig
 
-
 @dataclass
 class Config:
     bot: TgBot
     redis: Redis
     db: Database
     logging: Logging
-    middlewares: Middlewares
+    i18n: I18nConfig
+    project_phase: str # 'dev' | 'prod'
 
 
 env = Env()
 env.read_env()
-logs_path = Path.joinpath(Path(__file__).cwd(), f'logs_{env.str("BOT_USERNAME")}') if env.bool("SAVE_LOGS") else None
+logs_path: Optional[Path] = Path.joinpath(Path(__file__).cwd(), f'logs_{env.str("BOT_USERNAME")}') if env.bool("SAVE_LOGS") else None
 
-config = Config(
+config: Config = Config(
     bot=TgBot(
         token=env.str("BOT_TOKEN"),
         fsm_type=env.str("FSM_MODE"),
-        admins=env.list("BOT_ADMINS")
+        admins=env.list("BOT_ADMINS", subcast=int)
     ),
     redis=Redis(
         host=env.str("REDIS_HOST"),
@@ -85,14 +86,14 @@ config = Config(
         level=env.str("LOG_LEVEL"),
         ignored=["aiogram.bot.api"]
     ),
-    middlewares=Middlewares(
-        i18n=I18nConfig(
-            locales_path=Path.joinpath(
-                Path(__file__).parent.parent, 'locales'),
-            default_language="ru",
-            allow_missing_translation=True,
-            allow_missing_placeholder=True,
-            allow_missing_plural=True
-        )
-    )
+    i18n=I18nConfig(
+        locales_path=Path.joinpath(
+            Path(__file__).parent.parent, 'locales'),
+        default_language="ru",
+        use_default_language_on_missing=True,
+        allow_missing_translation=True,
+        allow_missing_placeholder=True,
+        allow_missing_plural=True
+    ),
+    project_phase=env.str("PROJECT_PHASE")
 )
