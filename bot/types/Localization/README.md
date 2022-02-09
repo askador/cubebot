@@ -14,10 +14,11 @@
 { 
     "<your command>": {
         "template": "<your template>",
-        "forms": ["<your form1>", "<your form2>", etc...]
+        "forms": ["<your form 1>", "<your form 2>", "your form N"]
     }
 }
 ```
+
 - For multiline forms use template:
 
 ```json
@@ -29,7 +30,7 @@
 }
 ```
 
-- Order is important [one, many, etc...]
+- Order is important [one, many, zero, etc...]
 
 ## Example
 
@@ -61,7 +62,7 @@ async def main():
     print(await i18n.t('present'))
 ```
 
-```bash
+```
 Output: Hello User!
 Output: You have 2 apples in yor basket
 Output: You have received

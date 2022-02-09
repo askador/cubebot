@@ -46,6 +46,7 @@ class I18nJSON:
             return 
         raise ValueError(f"No such language: {repr(language_key)}")
 
+
     def get_language(self) -> str:
         return self.language_key
 
@@ -54,19 +55,22 @@ class I18nJSON:
         plural_form = ''
         template: Optional[str] = None
 
-        try:
+        forms = utils.get(f"{keys}.forms", resources)
+
+        if not forms and self.use_default_language_on_missing:
+            resources = self.locales.get(self.default_language)
             forms = utils.get(f"{keys}.forms", resources)
-            plural_form = pluralize(self.language_key, amount, forms)
-        except (ValueError, AttributeError):
-            if self.allow_missing_plural:
-                template = f"{self.language_key}.{keys}"
-            else:
-                raise ValueError(
-                    f"Incorrect filling of pluralization forms for {self.language_key}.{keys}"
-                )
+            self.language_key = self.default_language
         
-        if not template:
-            template: Optional[str] = utils.get(f"{keys}.template", resources)
+        if not forms and self.allow_missing_plural:
+            template = f"{self.language_key}.{keys}"
+            return template, plural_form
+
+        if not forms and not self.allow_missing_plural:
+            raise ValueError(f"Incorrect filling of pluralization forms for {self.language_key}.{keys}")
+
+        plural_form = pluralize(self.language_key, amount, forms)
+        template: Optional[str] = utils.get(f"{keys}.template", resources)
 
         return template, plural_form
 
@@ -79,9 +83,10 @@ class I18nJSON:
 
         template: Optional[str] = utils.get(keys, resources)   
         if "amount" in kwargs:
-            template, form = self.pluralize(keys, kwargs.get('amount'), resources) # type: ignore
+            template, form = self.pluralize(keys, kwargs.get('amount'), resources)
             template_data['form'] = form
-            template_data['amount'] = kwargs.get('amount')
+            if not template_data.get('amount'):
+                template_data['amount'] = kwargs.get('amount')
 
         if not template and self.use_default_language_on_missing:
             resources = self.locales.get(self.default_language)
@@ -96,7 +101,7 @@ class I18nJSON:
         if type(template) is list:
             template = ''.join(template)
 
-        formatter = TranslationFormatter(template, {                    # type: ignore         
+        formatter = TranslationFormatter(template, {  
             "allow_missing_placeholder": self.allow_missing_placeholder
         })
         return formatter.format(**template_data)

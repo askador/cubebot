@@ -6,6 +6,10 @@
     },
     "simple": "простой перевод",
     "use_default_language": "дефолтный перевод",
+    "plural_use_default_language": {
+        "template": "У вас ${amount} ${form}",
+        "forms": ["яблоко", "яблока", "яблок"]
+    },
     "two_args": "${first} ${second}",
     "incorrect_plural": {
         "template": "У вас ${amount} ${form}",

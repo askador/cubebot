@@ -5,7 +5,7 @@ from pathlib import Path
 from unittest import TestCase
 
 sys.path.append("D:/Programming/TelegramBots/CubeBot")
-from bot.types.Localization.I18nJSON import I18nJSON
+from bot.types.Localization import I18nJSON
 from bot.data.config import I18nConfig
 
 
@@ -95,6 +95,11 @@ class TestTranslationFormat(TestCase):
         i18n.allow_missing_plural = False
         with self.assertRaises(ValueError):
             i18n.t('simple', amount=1)
+
+    def test_plural_use_default_language_on_missing(self):
+        i18n = I18nJSON(self.config)
+        i18n.set_language('en')
+        self.assertEqual(i18n.t('plural_use_default_language', amount=1), 'У вас 1 яблоко')
 
     def test_multiline_string(self):
         i18n = I18nJSON(self.config)
