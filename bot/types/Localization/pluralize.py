@@ -1,5 +1,5 @@
-from typing import Optional, Union
-
+from typing import Optional
+from functools import lru_cache
 
 
 def english(n: int) -> int:
@@ -61,7 +61,7 @@ mapping = {
   'arabic': ('ar')
 }
 
-
+@lru_cache(maxsize=5)
 def get_lang(code: str) -> Optional[str]:
     for key, values in mapping.items():
         if code in values:
