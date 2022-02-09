@@ -57,9 +57,9 @@ from bot.data.config import I18nConfig
 i18n = I18nJSON(config: I18nConfig)
 
 async def main():
-    print(await i18n.t('greeting', {name="User"}))
-    print(await i18n.t('basket', amount=2))
-    print(await i18n.t('present'))
+    print(i18n.t('greeting', {name="User"}))
+    print(i18n.t('basket', amount=2))
+    print(i18n.t('present'))
 ```
 
 ```
