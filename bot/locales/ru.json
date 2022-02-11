@@ -94,7 +94,18 @@
             "<b>Игр сыграно: </>${plays_amount}\n",
             "\n",
             "<code>id: ${id}</>"
-        ]
+        ],
+        "give_money": {
+            "template": [
+                "<a href='tg://user?id=${sender_id}'>${sender_name}</a> передал ",
+                "<a href='tg://user?id=${recipient_id}'>${recipient_name}</a> ${amount} ${form}"
+            ],
+            "forms": [
+                "монету",
+                "монет",
+                "монет"
+            ]
+        }
     },
     "money": {
         "not_enough": "Недостаточно монет"
