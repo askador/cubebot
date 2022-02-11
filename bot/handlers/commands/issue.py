@@ -1,5 +1,3 @@
-from cachetools import TTLCache
-
 from aiogram import Dispatcher
 from aiogram.types import Message
 from aiogram.dispatcher.filters import Command
@@ -8,16 +6,21 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from bot.db.models import Issue
 from bot.types.Localization import I18nJSON
-from bot.utils.throttling import rate_limit
+from bot.utils import rate_limit, redis_storage
+
 
 ISSUE_CHAT_ID = -1001534253038
-cache = TTLCache(maxsize=float('inf'), ttl=6 * 60)
+ONE_HOUR = 60 * 60
+SIX_HOURS = 6 * ONE_HOUR
 
 @rate_limit()
 async def issue(message: Message, i18n: I18nJSON, command: Command.CommandObj, session: AsyncSession):
 
-    if cache.get(message.from_user.id):
+    if await redis_storage.get(prefix="issue", user=message.from_user.id):
         return await message.answer(i18n.t('commands.issue.throttle'))
+
+    # if await redis_storage.get(prefix="issue", user=message.from_user.id):
+    #     return await message.answer("CACHED")
 
     if not command.args:
         return await message.answer(i18n.t('commands.issue.rule'))
@@ -38,7 +41,8 @@ async def issue(message: Message, i18n: I18nJSON, command: Command.CommandObj, s
     await session.commit()
     
     await message.answer(i18n.t("commands.issue.answer"))
-    cache[message.from_user.id] = True
+    await redis_storage.set(prefix="issue", user=message.from_user.id, data="used", ttl=SIX_HOURS)
+
 
 
 def register(dp: Dispatcher):
