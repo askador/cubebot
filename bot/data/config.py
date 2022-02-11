@@ -12,10 +12,19 @@ class TgBot:
 
 
 @dataclass
-class Redis:
+class RedisConfig:
     host: str
     port: int
     db: int
+    password: str
+
+
+@dataclass
+class InfluxDBConfig:
+    host: str
+    port: int
+    database: str 
+    username: str
     password: str
 
 
@@ -51,7 +60,8 @@ class Middlewares:
 @dataclass
 class Config:
     bot: TgBot
-    redis: Redis
+    redis: RedisConfig
+    influxdb: InfluxDBConfig
     db: Database
     logging: Logging
     i18n: I18nConfig
@@ -68,11 +78,18 @@ config: Config = Config(
         fsm_type=env.str("FSM_MODE"),
         admins=env.list("BOT_ADMINS", subcast=int)
     ),
-    redis=Redis(
+    redis=RedisConfig(
         host=env.str("REDIS_HOST"),
         port=env.int("REDIS_PORT"),
         db=env.int("REDIS_DB_FSM"),
         password=env.str("REDIS_PASSWORD")
+    ),
+    influxdb=InfluxDBConfig(
+        host=env.str('INFLUXDB_HOST'),
+        port=env.int('INFLUXDB_PORT'),
+        database=env.str("INFLUXDB_DATABASE"),
+        username=env.str("INFLUXDB_USERNAME"),
+        password=env.str("INFLUXDB_PASSWORD")
     ),
     db=Database(
         host=env.str("DB_HOST"),
