@@ -1,6 +1,6 @@
 from aiogram import Dispatcher
 
-from . import new_game
+from . import bet
 
 def register(dp: Dispatcher):
-    new_game.register(dp)
+    bet.register(dp)
