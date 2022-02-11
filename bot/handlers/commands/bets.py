@@ -26,7 +26,7 @@ async def bets(
 
     bets = (await session.execute(query)).all()
     
-    res = ''
+    res = i18n.t('commands.bets.label')
     for bet in bets:
         numbers, amount = bet
         res += i18n.t('commands.bets', {"amount": f"{amount:,}", "numbers": numbers}, amount=amount)
