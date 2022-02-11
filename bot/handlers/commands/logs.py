@@ -5,6 +5,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from bot.db.models import ChatLog
+from bot.filters import StrictCommand
 from bot.types.Localization import I18nJSON
 from bot.utils.throttling import rate_limit
 
@@ -21,5 +22,5 @@ async def logs(message: types.Message, session: AsyncSession, i18n: I18nJSON):
     await message.reply(res)
 
 def register(dp: Dispatcher):
-    dp.register_message_handler(logs, Command('logs'))
+    dp.register_message_handler(logs, Command('logs'), StrictCommand())
     dp.register_message_handler(logs, Command('логи', prefixes='!'))
