@@ -6,3 +6,5 @@ environs==9.4.0
 sqlalchemy==1.4.29
 aioredis==2.0.1
 asyncpg==0.25.0
+cahetools==5.0.0
+aioinflux==0.9.0
