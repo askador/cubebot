@@ -1,7 +1,7 @@
 from asyncio.log import logger
 
 from aiogram.dispatcher.middlewares import BaseMiddleware
-from aiogram.types import Message
+from aiogram.types import Message, CallbackQuery
 
 from bot.types import I18nJSON
 from bot.data.config import I18nConfig
@@ -15,6 +15,12 @@ class i18nMiddleware(BaseMiddleware):
 
     async def on_process_message(self, message: Message, data: dict):
         locale = message.from_user.language_code
+
+        self.i18n.set_language(locale)
+        data['i18n'] = self.i18n
+
+    async def on_process_callback_query(self, cb: CallbackQuery, data: dict):
+        locale = cb.from_user.language_code
 
         self.i18n.set_language(locale)
         data['i18n'] = self.i18n
