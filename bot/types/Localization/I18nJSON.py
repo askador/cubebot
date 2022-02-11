@@ -51,7 +51,7 @@ class I18nJSON:
         return self.language_key
 
 
-    def pluralize(self, keys: str, amount: int, resources: Optional[dict]) -> Tuple[Optional[str], str]:
+    def pluralize(self, keys: str, amount, resources: Optional[dict]) -> Tuple[Optional[str], str]:
         plural_form = ''
         template: Optional[str] = None
 
@@ -101,7 +101,7 @@ class I18nJSON:
         if type(template) is list:
             template = ''.join(template)
 
-        formatter = TranslationFormatter(template, {  
+        formatter = TranslationFormatter(template, {  # type: ignore
             "allow_missing_placeholder": self.allow_missing_placeholder
         })
         return formatter.format(**template_data)

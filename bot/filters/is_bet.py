@@ -6,8 +6,8 @@ from aiogram.dispatcher.filters import BoundFilter
 
 
 class IsBet(BoundFilter):
-    async def check(self, message: types.Message) -> Union[bool, dict[str, dict]]:
-        # remove command at the beginning
+    async def check(self, message: types.Message) -> Union[bool, "dict[str, dict]"]:
+        # remove command at the beginning `!ставка 100 1`
         text = message.text.replace("!ставка ", '').replace("!с ", '')
 
         if re.match(r'^([0-9_,]+) (на )?([1-6]|([1-6]-[1-6]))$', text) is None:
@@ -19,7 +19,7 @@ class IsBet(BoundFilter):
         if amount == '': # check if bet is not like '__ 1' 
             return False
 
-        if int(amount) <= 0:
+        if int(amount) == 0:
             return False
 
         if len(numbers) > 1 and numbers[2] <= numbers[0]:

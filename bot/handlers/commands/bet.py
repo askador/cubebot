@@ -18,7 +18,7 @@ async def bet(
     i18n: I18nJSON, 
     session: AsyncSession, 
     player: Player, 
-    bet_data: dict[str, int]
+    bet_data: "dict[str, int]"
 ):
 
     chat_id = message.chat.id

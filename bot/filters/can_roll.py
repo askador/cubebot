@@ -11,7 +11,7 @@ from bot.db.models import Game, Bet
 
 
 class CanRoll(BoundFilter):
-    async def check(self, message: types.Message) -> Union[bool, dict[str, bool]]:
+    async def check(self, message: types.Message) -> Union[bool, "dict[str, bool]"]:
         data = ctx_data.get()
         session = data.get('session')
         

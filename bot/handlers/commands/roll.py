@@ -56,10 +56,10 @@ async def process_bets(number, chat_id, session: AsyncSession, i18n: I18nJSON) -
         # check winning bet
         if len(bet.numbers) > 1:
             if int(bet.numbers[0]) <= number <= int(bet.numbers[2]):
-                prize: int = int(bet.amount * 6 / (int(bet.numbers[2]) - int(bet.numbers[0]) + 1))
+                prize = int(bet.amount * 6 / (int(bet.numbers[2]) - int(bet.numbers[0]) + 1))
         else:   
             if int(bet.numbers) == number:
-                prize: int = bet.amount * 6
+                prize = int(bet.amount * 6)
 
         # update player 
         if prize > 0:
@@ -69,7 +69,8 @@ async def process_bets(number, chat_id, session: AsyncSession, i18n: I18nJSON) -
             results += i18n.t('commands.roll.results.won', {
                 "id": player.id,
                 "name": player.fullname,
-                "prize": f"{prize:,}"
+                "prize": f"{prize:,}",
+                "numbers": bet.numbers
             }, amount=prize)
 
         else:
@@ -91,7 +92,7 @@ async def process_bets(number, chat_id, session: AsyncSession, i18n: I18nJSON) -
     return all_bets + "\n" + results
     
 
-async def update_player_stats(player: Player, stats: dict[str, int]) -> None:
+async def update_player_stats(player: Player, stats: "dict[str, int]") -> None:
     player.won          += stats.get("won", 0)                      
     player.plays_amount += stats.get("plays_amount", 0)             
     player.loss         += stats.get("loss", 0)                     
