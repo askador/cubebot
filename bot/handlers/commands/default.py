@@ -1,5 +1,5 @@
 from aiogram import Dispatcher, types
-from aiogram.dispatcher.filters import CommandStart, CommandHelp, Command
+from aiogram.dispatcher.filters import CommandStart, CommandHelp
 
 from bot.filters import StrictCommand
 from bot.types.Localization import I18nJSON
