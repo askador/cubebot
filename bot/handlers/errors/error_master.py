@@ -1,5 +1,5 @@
+import asyncio
 from loguru import logger
-from time import sleep
 from aiogram.types import Update
 from aiogram.utils.exceptions import (
     Unauthorized, Throttled, ChatNotFound, 
@@ -90,7 +90,7 @@ async def errors_handler(update: Update, exception, *args, **kwargs):
 
     if isinstance(exception, RetryAfter):
         logger.error(f'RetryAfter: {exception} \nUpdate: {update}')
-        sleep(exception.timeout)
+        await asyncio.sleep(exception.timeout)
         return True
 
     if isinstance(exception, CantParseEntities):
