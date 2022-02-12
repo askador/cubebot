@@ -12,4 +12,4 @@ class Game(Base):
 
 
     def __repr__(self):
-       return f"Game(chat_id={self.chat_id}')" 
+        return f"Game(chat_id={self.chat_id}')" 

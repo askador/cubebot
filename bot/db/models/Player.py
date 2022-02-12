@@ -21,4 +21,4 @@ class Player(Base):
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
 
     def __repr__(self):
-       return f"Player(id='{self.id}', fullname='{self.fullname}', money='{self.money}')" 
+        return f"Player(id='{self.id}', fullname='{self.fullname}', money='{self.money}')" 

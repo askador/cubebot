@@ -31,11 +31,11 @@ def chinese(n: int) -> int:
 
 def arabic(n: int) -> int:
     if n >= 0 and n < 3:
-      return int(n)
+        return int(n)
     if n % 100 <= 10:
-      return 3
+        return 3
     if n >= 11 and n % 100 <= 99:
-      return 4
+        return 4
     return 5
 
 pluralRules = {
