@@ -22,5 +22,3 @@ class OnlyAdmins(BaseMiddleware):
             user_id = update.callback_query.from_user.id
         if not user_id in admins: 
             raise CancelHandler()
-
- 
