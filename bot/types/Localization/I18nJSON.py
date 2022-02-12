@@ -28,7 +28,8 @@ class I18nJSON:
     def load_locales(self) -> None:
         locale_files = self.locales_path.glob(f'*.{self.file_extension}')
         for file in locale_files:
-            if file.stat().st_size == 0: continue
+            if file.stat().st_size == 0: 
+                continue
 
             with open(file, 'r', encoding=self.encoding) as locale:
                 self.locales.update({file.stem: json.load(locale)})
