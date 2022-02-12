@@ -14,7 +14,12 @@ ONE_HOUR = 60 * 60
 SIX_HOURS = 6 * ONE_HOUR
 
 @rate_limit()
-async def issue(message: Message, i18n: I18nJSON, command: Command.CommandObj, session: AsyncSession):
+async def issue(
+    message: Message, 
+    i18n: I18nJSON, 
+    command: Command.CommandObj, 
+    session: AsyncSession
+):
 
     if await redis_storage.get(prefix="issue", user=message.from_user.id):
         return await message.answer(i18n.t('commands.issue.throttle'))

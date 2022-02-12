@@ -12,7 +12,9 @@ from bot.utils.throttling import rate_limit
 @rate_limit()
 async def logs(message: types.Message, session: AsyncSession, i18n: I18nJSON):
     logs = (await session.execute(
-        select([ChatLog.log]).where(ChatLog.chat_id==message.chat.id).order_by(ChatLog.id)
+        select([ChatLog.log])\
+            .where(ChatLog.chat_id==message.chat.id)\
+            .order_by(ChatLog.id)
     )).scalars().all()
     
     if not logs:
