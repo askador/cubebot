@@ -31,5 +31,5 @@ class ThrottlingMiddleware(BaseMiddleware):
             if not caches[throttling_key].get(user_id):
                 caches[throttling_key][user_id] = True
                 return
-            else:
-                raise CancelHandler
+                
+            raise CancelHandler

@@ -116,5 +116,5 @@ class TranslationFormatter(Template):
     def format(self, **kwargs) -> str:
         if self.allow_missing_placeholder:
             return self.safe_substitute(**kwargs)
-        else:
-            return self.substitute(**kwargs)
+            
+        return self.substitute(**kwargs)
