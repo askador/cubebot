@@ -65,7 +65,7 @@ mapping = {
 def get_lang(code: str) -> Optional[str]:
     for key, values in mapping.items():
         if code in values:
-            return(key)
+            return key
 
     return None
 
