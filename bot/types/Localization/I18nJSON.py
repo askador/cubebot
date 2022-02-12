@@ -17,8 +17,8 @@ class I18nJSON:
         self.locales_path: Path              = config.locales_path
         self.default_language                = config.default_language
         self.use_default_language_on_missing = config.use_default_language_on_missing
-        self.allow_missing_translation       = config.allow_missing_translation,
-        self.allow_missing_placeholder       = config.allow_missing_placeholder,
+        self.allow_missing_translation       = config.allow_missing_translation
+        self.allow_missing_placeholder       = config.allow_missing_placeholder
         self.allow_missing_plural            = config.allow_missing_plural
 
         self.locales = {}
