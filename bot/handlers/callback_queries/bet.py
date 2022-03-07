@@ -6,11 +6,14 @@ from aiogram.utils.callback_data import CallbackData
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from bot.analytics import analytics, events
+from bot.analytics.events import EventAction
 from bot.db.models import Bet, Game, Player
 from bot.types.Localization import I18nJSON
 
 cd = CallbackData('game', 'action', 'amount', 'number')
 
+@analytics.cb_query(events.EventCbQueryAction.BET)
 async def bet(
     cb: CallbackQuery, 
     callback_data: "dict[str, Union[int, str]]", 
@@ -31,6 +34,7 @@ async def bet(
         return 
 
     if not player.money >= amount:
+        await analytics.action(chat_id, EventAction.CALLBACK_QUERY_ANSWER)
         return await cb.answer(i18n.t('money.not_enough')) 
 
     await session.execute(
@@ -57,8 +61,11 @@ async def bet(
         },
         amount = amount
     ))
+    await analytics.action(cb.message.chat.id, EventAction.SEND_MESSAGE)
+    
 
     await cb.answer()
+    await analytics.action(cb.message.chat.id,EventAction.CALLBACK_QUERY_ANSWER)
 
 def register(dp: Dispatcher):
     dp.register_callback_query_handler(bet, cd.filter(action='bet'))
