@@ -3,43 +3,56 @@ from aiogram.utils.callback_data import CallbackData
 
 
 def new_game_kb(locale: str = 'ru') -> InlineKeyboardMarkup:
-    locales = {
+    bet_locales = {
         "ru": "{amount} на {number}",
         "en": "{amount} on {number}"
     }
 
-    cd = CallbackData('game', 'action', 'amount', 'number')
-    line = locales.get(locale, "{amount} на {number}")
+    roll_locales = {
+        "ru": "Бросить",
+        "en": "Roll"
+    }
+
+    bet_cd = CallbackData('game', 'action', 'amount', 'number')
+    roll_cd = CallbackData('game', 'action')
+    bet = bet_locales.get(locale, "{amount} на {number}")
+    roll = roll_locales.get(locale, "Бросить")
 
     kb = [
         [
             InlineKeyboardButton(
-                line.format(amount=100, number=1),
-                callback_data=cd.new(action='bet', amount=100, number='1')
+                bet.format(amount=100, number=1),
+                callback_data=bet_cd.new(action='bet', amount=100, number='1')
             ),
             InlineKeyboardButton(
-                line.format(amount=100, number=2),
-                callback_data=cd.new(action='bet', amount=100, number='2')
+                bet.format(amount=100, number=2),
+                callback_data=bet_cd.new(action='bet', amount=100, number='2')
             ),
             InlineKeyboardButton(
-                line.format(amount=100, number=3),
-                callback_data=cd.new(action='bet', amount=100, number='3')
+                bet.format(amount=100, number=3),
+                callback_data=bet_cd.new(action='bet', amount=100, number='3')
             ),
         ],
         [
             InlineKeyboardButton(
-                line.format(amount=100, number=4),
-                callback_data=cd.new(action='bet', amount=100, number='4')
+                bet.format(amount=100, number=4),
+                callback_data=bet_cd.new(action='bet', amount=100, number='4')
             ),
             InlineKeyboardButton(
-                line.format(amount=100, number=5),
-                callback_data=cd.new(action='bet', amount=100, number='5')
+                bet.format(amount=100, number=5),
+                callback_data=bet_cd.new(action='bet', amount=100, number='5')
             ),
             InlineKeyboardButton(
-                line.format(amount=100, number=6),
-                callback_data=cd.new(action='bet', amount=100, number='6')
+                bet.format(amount=100, number=6),
+                callback_data=bet_cd.new(action='bet', amount=100, number='6')
             ),
         ],
+        [
+            InlineKeyboardButton(
+                roll,
+                callback_data=roll_cd.new(action='roll')
+            )
+        ]
     ]
 
     return InlineKeyboardMarkup(inline_keyboard=kb)
