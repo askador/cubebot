@@ -66,10 +66,10 @@ PRIVATE_CHAT_EN_SCOPE_COMMANDS = (
 async def set_bot_commands(bot: Bot):
 
     commands = [
-        DEFAULT_SCOPE_COMMANDS,
         EN_SCOPE_COMMANDS,
-        PRIVATE_CHAT_DEFAULT_SCOPE_COMMANDS,
-        PRIVATE_CHAT_EN_SCOPE_COMMANDS
+        DEFAULT_SCOPE_COMMANDS,
+        PRIVATE_CHAT_EN_SCOPE_COMMANDS,
+        PRIVATE_CHAT_DEFAULT_SCOPE_COMMANDS
     ]
 
     for commands_list, commands_scope, language in commands:
