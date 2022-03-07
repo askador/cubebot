@@ -19,12 +19,15 @@ class InterceptHandler(logging.Handler):
         return self.LEVELS_MAP.get(record.levelno, record.levelno)
 
     def emit(self, record):
-        logger_opt = logger.opt(depth=6, exception=record.exc_info)
+        logger_opt = logger.opt(depth=3, exception=record.exc_info)
         logger_opt.log(self._get_level(record), record.getMessage())
 
 
 def setup_logger(config: Logging):
-    logging.basicConfig(handlers=[InterceptHandler()], level=logging.getLevelName(config.level))
+    logging.basicConfig(
+        handlers=[InterceptHandler()], 
+        level=logging.getLevelName(config.level),
+    )
     for ignore in config.ignored:
         logger.disable(ignore)
     if config.path:
