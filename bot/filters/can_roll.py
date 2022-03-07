@@ -11,13 +11,20 @@ from bot.db.models import Game, Bet
 
 
 class CanRoll(BoundFilter):
-    async def check(self, message: types.Message) -> Union[bool, "dict[str, bool]"]:
+    async def check(self, event: Union[types.Message, types.CallbackQuery]) -> Union[bool, "dict[str, bool]"]:
         data = ctx_data.get()
         session = data.get('session')
+
+        if isinstance(event, types.CallbackQuery):
+            chat_id = event.message.chat.id
+            user_id = event.from_user.id
+        else:
+            chat_id = event.chat.id
+            user_id = event.from_user.id
         
         game: Optional[tuple[Game]] = (await session.execute(
             select(Game)
-            .where(Game.chat_id == message.chat.id)
+            .where(Game.chat_id == chat_id)
         )).fetchone()
 
         if not game or game[0].is_rolling:
@@ -26,8 +33,8 @@ class CanRoll(BoundFilter):
         player_has_bets = (await session.execute(
             select(func.count(Bet.id))
             .where(and_(
-                Bet.player_id == message.from_user.id, 
-                Bet.chat_id == message.chat.id
+                Bet.player_id == user_id, 
+                Bet.chat_id == chat_id
             ))
         )).fetchone()
 
