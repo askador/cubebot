@@ -8,4 +8,4 @@ aioredis==2.0.1
 asyncpg==0.25.0
 cachetools==5.0.0
 aioinflux==0.9.0
-alembic==s1.7.6
+alembic==1.7.6
