@@ -22,8 +22,8 @@ class ACLMiddleware(BaseMiddleware):
         data["player"] = player
         
 
-    async def on_process_message(self, message: Message, data: dict):
+    async def on_pre_process_message(self, message: Message, data: dict):
         await self.setup_data(data, message.from_user, message.chat)
 
-    async def on_process_callback_query(self, query: CallbackQuery, data: dict):
+    async def on_pre_process_callback_query(self, query: CallbackQuery, data: dict):
         await self.setup_data(data, query.from_user, query.message.chat)
