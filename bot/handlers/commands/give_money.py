@@ -8,9 +8,12 @@ from sqlalchemy import update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from bot.db.models import Player
+from bot.analytics import analytics
+from bot.analytics.events import EventCommand, EventAction
 from bot.types.Localization import I18nJSON
 
 
+@analytics.command(EventCommand.GIVE_MONEY)
 async def give_money(
     message: Message,
     command: Command.CommandObj,
@@ -32,6 +35,7 @@ async def give_money(
 
     amount = int(amount)
     if amount >= player.money:
+        await analytics.action(message.chat.id, EventAction.SEND_MESSAGE)
         return await message.answer(i18n.t('money.not_enough'))
 
     # add player if not exists
@@ -50,6 +54,8 @@ async def give_money(
             "recipient_name": recipient.full_name,
             "amount": f"{amount:,}"
         }, amount=amount))
+    await analytics.action(message.chat.id, EventAction.SEND_MESSAGE)
+
 
 
 def register(dp: Dispatcher):

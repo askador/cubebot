@@ -10,9 +10,12 @@ from bot.db.models import Player, Game, Bet
 from bot.filters import IsBet
 from bot.types.Localization import I18nJSON
 from bot.utils import rate_limit
+from bot.analytics import analytics
+from bot.analytics.events import EventAction, EventCommand
 
 
 @rate_limit(key="bet")
+@analytics.command(EventCommand.BET)
 async def bet(
     message: types.Message, 
     i18n: I18nJSON, 
@@ -58,7 +61,7 @@ async def bet(
         },
         amount = bet_data.get('amount')
     ))
-
+    await analytics.action(chat_id, EventAction.SEND_MESSAGE)
 
 def register(dp: Dispatcher):
     dp.register_message_handler(bet, Command(['ставка', 'с'], prefixes='!'), IsBet())

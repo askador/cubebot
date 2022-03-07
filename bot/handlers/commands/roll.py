@@ -11,9 +11,12 @@ from bot.db.models import Bet, Player, Game, ChatLog
 from bot.filters import StrictCommand, CanRoll
 from bot.types.Localization import I18nJSON
 from bot.utils import rate_limit
+from bot.analytics import analytics
+from bot.analytics.events import EventAction, EventCommand
 
 
 @rate_limit("roll")
+@analytics.command(EventCommand.ROLL)
 async def roll(
     message: types.Message, 
     i18n: I18nJSON, 
@@ -22,12 +25,14 @@ async def roll(
 ):
     # if player has no bets. Taken from filter
     if no_bets:
+        await analytics.action(message.chat.id, EventAction.SEND_MESSAGE)
         return await message.reply(i18n.t('commands.roll.invalid'))
 
     await session.execute(update(Game).where(Game.chat_id == message.chat.id).values({"is_rolling": True}))
     await session.commit()
 
     dice_msg = await message.answer_dice("🎲")
+    await analytics.action(message.chat.id, EventAction.SEND_MESSAGE)
     number = dice_msg.dice.value
 
     results = f'🎲  {number}\n'
@@ -35,6 +40,7 @@ async def roll(
 
     await asyncio.sleep(4)
     await message.answer(results)
+    await analytics.action(message.chat.id, EventAction.SEND_MESSAGE)
 
 
 async def process_bets(number, chat_id, session: AsyncSession, i18n: I18nJSON) -> str:
