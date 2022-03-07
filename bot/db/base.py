@@ -22,7 +22,6 @@ async def create_pool(db: Database) -> sessionmaker:
         async with engine.begin() as conn:
             # initialize all tables
             await conn.run_sync(Base.metadata.create_all)
-            # await conn.run_sync(text("SELECT 1+1 AS RESULT"))
     except gaierror as addrexc:
         logger.exception("host is invalid", addrexc)
         exit()
