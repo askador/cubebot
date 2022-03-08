@@ -6,4 +6,4 @@ COPY requirements.txt /cubebot/requirements.txt
 RUN pip install -r /cubebot/requirements.txt
 COPY . /cubebot/
 
-CMD ["python3", "/cubebot/__main__.py"]
+CMD ["python3", "-m", "/cubebot/bot"]
