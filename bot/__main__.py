@@ -61,7 +61,7 @@ async def main():
         await dp.storage.wait_closed()
         await redis_storage.close()
         await on_shutdown.close_all_games(dp, db_pool, config.i18n)
-        await bot.send_message(526497876, "Bot stopped!")
+        await bot.send_message(-1001534253038, "Bot stopped!")
         session = await bot.get_session()
         await session.close() # type: ignore
 
