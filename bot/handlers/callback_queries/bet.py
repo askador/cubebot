@@ -30,7 +30,7 @@ async def bet(
         .where(Game.chat_id == chat_id)
     )).fetchone()
 
-    if not game[0] or game[0].is_rolling: 
+    if not game or game[0].is_rolling:              # type: ignore
         return 
 
     if not player.money >= amount:
