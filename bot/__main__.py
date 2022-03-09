@@ -54,6 +54,7 @@ async def main():
         await dp.skip_updates()
         await bot.delete_webhook(drop_pending_updates=True)
         await dp.start_polling(allowed_updates=get_allowed_updates_list(dp))
+        await bot.send_message(-1001534253038, "Bot started!")
     finally:
         # await on_shutdown(dp)
         logger.warning("Stopping bot")
