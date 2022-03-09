@@ -52,12 +52,16 @@ async def process_bets(number, chat_id, session: AsyncSession, i18n: I18nJSON) -
 
     all_bets = i18n.t('commands.roll.results.all_bets_label')
     results = i18n.t('commands.roll.results.results_label')
+    players = []
 
     for bet in bets:
         prize = 0
 
         player: Player = await session.get(Player, bet.player_id)
-        await update_player_stats(player, {"plays_amount": 1})
+        if player.id not in players:
+            await update_player_stats(player, {"plays_amount": 1})
+        else:
+            players.append(player.id)
 
         # check winning bet
         if len(bet.numbers) > 1:
