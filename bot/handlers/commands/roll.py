@@ -36,9 +36,9 @@ async def roll(
     number = dice_msg.dice.value
 
     results = f'🎲  {number}\n'
+    await asyncio.sleep(4)
     results += await process_bets(number, message.chat.id, session, i18n)
 
-    await asyncio.sleep(4)
     await message.answer(results)
     await analytics.action(message.chat.id, EventAction.SEND_MESSAGE)
 
