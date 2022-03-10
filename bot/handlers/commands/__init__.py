@@ -1,13 +1,15 @@
 from aiogram import Dispatcher
 from . import (
-    default, ping, game, bet, roll, 
+    help, ping, game, bet, roll, 
     logs, money, issue, cancel_bets,
-    profile, give_money, show_bets
+    profile, give_money, show_bets,
+    start
 )
 
 
 def register(dp: Dispatcher):
-    default.register(dp)
+    start.register(dp)
+    help.register(dp)
     ping.register(dp)
     game.register(dp)
     roll.register(dp)
