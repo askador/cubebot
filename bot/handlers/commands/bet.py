@@ -21,7 +21,7 @@ async def bet(
     i18n: I18nJSON, 
     session: AsyncSession, 
     player: Player, 
-    bets: list[tuple]
+    bets
 ):
     chat_id = message.chat.id
     total_amount: int = sum(int(a) for a, n in bets)
