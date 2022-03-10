@@ -7,7 +7,7 @@ from aiogram.dispatcher.handler import ctx_data
 
 
 class IsBet(BoundFilter):
-    async def check(self, message: types.Message) -> Union[bool, dict[str, list[tuple[int, str]]]]:
+    async def check(self, message: types.Message) -> "Union[bool, dict[str, list[tuple[int, str]]]]":
         match: Callable[[str], Union[re.Match, None]] = lambda text: re.match(r'^([0-9_,]+) (на )?([1-6]|([1-6]-[1-6]))$', text)
 
         # remove command at the beginning `!ставка 100 1`
