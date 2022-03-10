@@ -8,7 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.util._collections import immutabledict
 
 from bot.db.models import Bet, Player, Game, ChatLog
-from bot.filters import StrictCommand, CanRoll
+from bot.filters import StrictCommand, PlayerHasBets, GameIsActive
 from bot.types.Localization import I18nJSON
 from bot.utils import rate_limit
 from bot.analytics import analytics
@@ -127,4 +127,4 @@ async def add_chat_log(chat_id, number, session: AsyncSession) -> None:
 
 
 def register(dp: Dispatcher):
-    dp.register_message_handler(roll, Command('roll'), StrictCommand(), CanRoll()) 
+    dp.register_message_handler(roll, Command('roll'), StrictCommand(), GameIsActive(), PlayerHasBets()) 
