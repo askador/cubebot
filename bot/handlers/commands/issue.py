@@ -1,3 +1,5 @@
+from time import time, strftime, gmtime
+
 from aiogram import Dispatcher
 from aiogram.types import Message
 from aiogram.dispatcher.filters import Command
@@ -26,7 +28,12 @@ async def issue(
 
     if await redis_storage.get(prefix="issue", user=message.from_user.id):
         await analytics.action(message.chat.id, EventAction.SEND_MESSAGE)
-        return await message.answer(i18n.t('commands.issue.throttle'))
+        issue_data = await redis_storage.get(prefix="issue", user=message.from_user.id)
+        time_left = strftime(
+            "%H:%M:%S", 
+            gmtime(issue_data.get('expiration', float('inf')) - time())
+        )
+        return await message.answer(i18n.t('commands.issue.throttle', {"time": time_left}))
 
     # if await redis_storage.get(prefix="issue", user=message.from_user.id):
     #     return await message.answer("CACHED")
@@ -55,7 +62,12 @@ async def issue(
     await message.answer(i18n.t("commands.issue.answer"))
     await analytics.action(message.chat.id, EventAction.SEND_MESSAGE)
     
-    await redis_storage.set(prefix="issue", user=message.from_user.id, data="used", ttl=SIX_HOURS)
+    await redis_storage.set(
+        prefix="issue", 
+        user=message.from_user.id, 
+        data={"expiration": time()+SIX_HOURS}, 
+        ttl=SIX_HOURS
+    )
 
 
 
