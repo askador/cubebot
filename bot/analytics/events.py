@@ -21,7 +21,7 @@ class EventCommand(Enum):
     PING = '/ping'
     START = '/start'
     HELP = '/help'
-    GAME = '/new_game'
+    GAME = '/game'
     ISSUE = '/issue'
     MONEY = '/money'
     PROFILE = '/profile'
