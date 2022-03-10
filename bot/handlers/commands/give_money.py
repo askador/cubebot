@@ -34,7 +34,7 @@ async def give_money(
         return
 
     amount = int(amount)
-    if amount >= player.money:
+    if amount > player.money:
         await analytics.action(message.chat.id, EventAction.SEND_MESSAGE)
         return await message.answer(i18n.t('money.not_enough'))
 
