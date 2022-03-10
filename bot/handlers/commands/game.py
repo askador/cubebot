@@ -32,7 +32,7 @@ async def new_game(message: types.Message, i18n: I18nJSON, session: AsyncSession
     session.add(Game(chat_id=chat_id))
     await session.commit()
 
-    await message.answer(i18n.t('commands.game.message'))#, reply_markup=new_game_kb(i18n.language_key))
+    await message.answer(i18n.t('commands.game.message'), reply_markup=new_game_kb(i18n.language_key))
     await analytics.action(chat_id, EventAction.SEND_MESSAGE)
 
 
