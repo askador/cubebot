@@ -48,7 +48,8 @@ async def main():
     await set_bot_commands(bot)
     
     green = "\033[92m"
-    logger.info(f"Starting bot {green}https://t.me/{(await bot.me).username}")
+    reset_color = "\033[0;0m"
+    logger.info(f"Starting bot {green}https://t.me/{(await bot.me).username}{reset_color}")
 
     try:
         await dp.skip_updates()
