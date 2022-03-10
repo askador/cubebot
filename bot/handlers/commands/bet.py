@@ -21,46 +21,40 @@ async def bet(
     i18n: I18nJSON, 
     session: AsyncSession, 
     player: Player, 
-    bet_data: "dict[str, int]"
+    bets: list[tuple[int, str]]
 ):
-
     chat_id = message.chat.id
+    total_amount: int = sum(int(a) for a, n in bets)
 
-    game: tuple[Optional[Game]] = (await session.execute(
-        select(Game)
-        .where(Game.chat_id == chat_id)
-    )).fetchone()
-
-    if not game or game[0].is_rolling:                              # type: ignore
-        return 
-
-    if not player.money >= bet_data.get("amount", float('inf')):
+    if player.money < total_amount:
         return await message.reply(i18n.t('money.not_enough')) 
 
-    await session.execute(
-        update(Player)
-        .where(Player.id == player.id)
-        .values({"money": player.money - bet_data.get("amount")})   # type: ignore
-    )
+    results = ''
 
-    session.add(Bet(
-        player_id=player.id,
-        chat_id=chat_id,
-        amount=bet_data.get("amount"),
-        numbers=bet_data.get("numbers")
-    ))
+    for bet in bets:
+        amount, numbers = int(bet[0]), bet[1]
+        session.add(Bet(
+            player_id=player.id,
+            chat_id=chat_id,
+            amount=amount,
+            numbers=numbers
+        ))
+        player.money -= amount  # type: ignore
+
+        results += i18n.t(
+            'commands.bet', 
+            {
+                "id": player.id,
+                "name": player.fullname,
+                "amount": f"{amount:,}",
+                "numbers": numbers   
+            },
+            amount = amount
+        ) + '\n'
+        
     await session.commit()
 
-    await message.answer(i18n.t(
-        'commands.bet', 
-        {
-            "id": player.id,
-            "name": player.fullname,
-            "amount": f"{bet_data.get('amount'):,}",
-            "numbers": bet_data.get("numbers")   
-        },
-        amount = bet_data.get('amount')
-    ))
+    await message.answer(results)
     await analytics.action(chat_id, EventAction.SEND_MESSAGE)
 
 def register(dp: Dispatcher):
