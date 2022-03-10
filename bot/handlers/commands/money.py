@@ -18,4 +18,4 @@ async def money(message: types.Message, player: Player) -> None:
 
 def register(dp: Dispatcher):
     dp.register_message_handler(money, Command('money'), StrictCommand())
-    dp.register_message_handler(money, Command('монеты', prefixes='!'))
+    # dp.register_message_handler(money, Command('монеты', prefixes='!'))
