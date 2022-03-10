@@ -5,13 +5,13 @@ from aiogram import Bot
 DEFAULT_SCOPE_COMMANDS = (
     [
         BotCommand("start", "Приветственное сообщение"),
-        BotCommand("help", "Помощь"),
         BotCommand("game", "Начать новую игру"),
         BotCommand("roll", "Бросить кости"),
+        BotCommand("profile", "Профиль игрока"),
         BotCommand("logs", "Логи 10 предыдущих игр"),
+        BotCommand("help", "Помощь"),
         # BotCommand("rating", "Рейтинг по чату"),
         BotCommand("money", "Просмотреть баланс"),
-        BotCommand("profile", "Профиль игрока"),
     ],
     BotCommandScopeDefault(),
     None
@@ -20,13 +20,13 @@ DEFAULT_SCOPE_COMMANDS = (
 EN_SCOPE_COMMANDS = (
     [
         BotCommand("start", "Greeting message"),
-        BotCommand("help", "Help message"),
         BotCommand("game", "Start a new game"),
         BotCommand("roll", "Roll the dice"),
+        BotCommand("profile", "Player Profile"),
         BotCommand("logs", "Logs of 10 previous games"),
+        BotCommand("help", "Help message"),
         # BotCommand("rating", "Rating"),
         BotCommand("money", "Current player money"),
-        BotCommand("profile", "Player Profile"),
     ],
     BotCommandScopeDefault(),
     'en'
@@ -35,12 +35,12 @@ EN_SCOPE_COMMANDS = (
 PRIVATE_CHAT_DEFAULT_SCOPE_COMMANDS = (
     [
         BotCommand("start", "Приветственное сообщение"),
-        BotCommand("help", "Помощь"),
         BotCommand("game", "Начать новую игру"),
         BotCommand("roll", "Бросить кости"),
-        BotCommand("logs", "Логи 10 предыдущих игр"),
-        BotCommand("money", "Просмотреть баланс"),
         BotCommand("profile", "Профиль игрока"),
+        BotCommand("logs", "Логи 10 предыдущих игр"),
+        BotCommand("help", "Помощь"),
+        BotCommand("money", "Просмотреть баланс"),
         BotCommand("issue", "Сообщить о проблеме с ботом"),
     ],
     BotCommandScopeAllPrivateChats(),
@@ -50,12 +50,12 @@ PRIVATE_CHAT_DEFAULT_SCOPE_COMMANDS = (
 PRIVATE_CHAT_EN_SCOPE_COMMANDS = (
     [
         BotCommand("start", "Greeting message"),
-        BotCommand("help", "Help message"),
         BotCommand("game", "Start a new game"),
         BotCommand("roll", "Roll the dice"),
+        BotCommand("profile", "Player Profile"),
         BotCommand("logs", "Logs of 10 previous games"),
         BotCommand("money", "Current player money"),
-        BotCommand("profile", "Player Profile"),
+        BotCommand("help", "Help message"),
         BotCommand("issue", "Report an issue with bot"),
     ],
     BotCommandScopeAllPrivateChats(),
