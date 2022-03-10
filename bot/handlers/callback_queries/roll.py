@@ -9,7 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update
 
 from bot.analytics import analytics, events
-from bot.filters import CanRoll
+from bot.filters import PlayerHasBets, GameIsActive
 from bot.db.models import Player, Game
 from bot.types.Localization import I18nJSON
 from bot.handlers.commands.roll import process_bets
@@ -50,4 +50,4 @@ async def cb_roll(
 
 
 def register(dp: Dispatcher):
-    dp.register_callback_query_handler(cb_roll, cd.filter(action='roll'), CanRoll())
+    dp.register_callback_query_handler(cb_roll, cd.filter(action='roll'), GameIsActive(), PlayerHasBets())
