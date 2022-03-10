@@ -76,7 +76,7 @@ class I18nJSON:
         return template, plural_form
 
 
-    def t(self, keys: str, template_data: dict = None, **kwargs):
+    def t(self, keys: str, template_data: Optional[dict] = None, **kwargs):
         resources: Optional[dict] = self.locales.get(self.language_key)
 
         if template_data is None:
