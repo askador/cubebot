@@ -58,9 +58,9 @@ async def process_bets(number, chat_id, session: AsyncSession, i18n: I18nJSON) -
         prize = 0
 
         player: Player = await session.get(Player, bet.player_id)
+
         if player.id not in players:
             await update_player_stats(player, {"plays_amount": 1})
-        else:
             players.append(player.id)
 
         # check winning bet
