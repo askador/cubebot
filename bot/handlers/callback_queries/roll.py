@@ -40,9 +40,9 @@ async def cb_roll(
     number = dice_msg.dice.value
 
     results = f'🎲  {number}\n'
+    await asyncio.sleep(4)
     results += await process_bets(number, chat_id, session, i18n)
 
-    await asyncio.sleep(4)
     await cb.message.answer(results)
     await cb.answer()
     await analytics.action(chat_id, events.EventAction.SEND_MESSAGE)

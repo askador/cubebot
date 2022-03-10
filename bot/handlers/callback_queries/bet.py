@@ -9,6 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from bot.analytics import analytics, events
 from bot.analytics.events import EventAction
 from bot.db.models import Bet, Game, Player
+from bot.filters.game_is_active import GameIsActive
 from bot.types.Localization import I18nJSON
 
 cd = CallbackData('game', 'action', 'amount', 'number')
@@ -25,13 +26,6 @@ async def bet(
     amount = int(callback_data["amount"])
     number = callback_data["number"]
 
-    game: tuple[Optional[Game]] = (await session.execute(
-        select(Game)
-        .where(Game.chat_id == chat_id)
-    )).fetchone()
-
-    if not game or game[0].is_rolling:              # type: ignore
-        return 
 
     if not player.money >= amount:
         await analytics.action(chat_id, EventAction.CALLBACK_QUERY_ANSWER)
@@ -68,4 +62,4 @@ async def bet(
     await analytics.action(cb.message.chat.id,EventAction.CALLBACK_QUERY_ANSWER)
 
 def register(dp: Dispatcher):
-    dp.register_callback_query_handler(bet, cd.filter(action='bet'))
+    dp.register_callback_query_handler(bet, cd.filter(action='bet'), GameIsActive())

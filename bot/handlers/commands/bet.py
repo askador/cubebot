@@ -8,6 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from bot.db.models import Player, Game, Bet
 from bot.filters import IsBet
+from bot.filters.game_is_active import GameIsActive
 from bot.types.Localization import I18nJSON
 from bot.utils import rate_limit
 from bot.analytics import analytics
@@ -58,4 +59,4 @@ async def bet(
     await analytics.action(chat_id, EventAction.SEND_MESSAGE)
 
 def register(dp: Dispatcher):
-    dp.register_message_handler(bet, Command(['ставка', 'с'], prefixes='!'), IsBet())
+    dp.register_message_handler(bet, Command(['ставка', 'с'], prefixes='!'), IsBet(), GameIsActive())
