@@ -17,5 +17,5 @@ def setup(dp: Dispatcher, i18n: I18nConfig, pool: sessionmaker, is_dev: bool = F
     dp.middleware.setup(DatabaseMiddleware(pool))   # pre_process
     dp.middleware.setup(ACLMiddleware())            # pre_process
     dp.middleware.setup(LoggingMiddleware())        
-    dp.middleware.setup(ThrottlingMiddleware())     # process   note: not pre_process bc it cannot get access to throttle key
+    dp.middleware.setup(ThrottlingMiddleware())     # process   note: not pre_process bc it cannot get access to throttle key 
     dp.middleware.setup(i18nMiddleware(i18n))       # process
