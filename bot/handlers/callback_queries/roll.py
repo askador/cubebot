@@ -6,14 +6,14 @@ from aiogram.types import CallbackQuery
 from aiogram.utils.callback_data import CallbackData
 
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, update
+from sqlalchemy import update
 
 from bot.analytics import analytics, events
 from bot.filters import PlayerHasBets, GameIsActive
 from bot.db.models import Player, Game
 from bot.types.Localization import I18nJSON
 from bot.handlers.commands.roll import process_bets
-
+from bot.keyboards.inline import play_again_kb
 
 cd = CallbackData('game', 'action')
 
@@ -43,7 +43,7 @@ async def cb_roll(
     await asyncio.sleep(4)
     results += await process_bets(number, chat_id, session, i18n)
 
-    await cb.message.answer(results)
+    await cb.message.answer(results, reply_markup=play_again_kb(i18n.language_key))
     await cb.answer()
     await analytics.action(chat_id, events.EventAction.SEND_MESSAGE)
 

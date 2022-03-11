@@ -13,6 +13,7 @@ from bot.types.Localization import I18nJSON
 from bot.utils import rate_limit
 from bot.analytics import analytics
 from bot.analytics.events import EventAction, EventCommand
+from bot.keyboards.inline import play_again_kb
 
 
 @rate_limit("roll")
@@ -39,7 +40,7 @@ async def roll(
     await asyncio.sleep(4)
     results += await process_bets(number, message.chat.id, session, i18n)
 
-    await message.answer(results)
+    await message.answer(results, reply_markup=play_again_kb(i18n.language_key))
     await analytics.action(message.chat.id, EventAction.SEND_MESSAGE)
 
 

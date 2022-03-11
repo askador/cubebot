@@ -35,6 +35,7 @@ class EventCommand(Enum):
 class EventCbQueryAction(Enum):
     ROLL = 'roll'
     BET = 'bet'
+    PLAY_AGAIN = "play_again"
     BONUS = 'bonus'
     GIVEAWAY = 'giveaway'
 
