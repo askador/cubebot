@@ -2,7 +2,6 @@ from contextlib import suppress
 
 from aiogram import Dispatcher, types
 from aiogram.dispatcher.filters import Command
-from aiogram.utils.exceptions import ChatNotFound
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
