@@ -9,6 +9,7 @@ class TgBot:
     token: str
     fsm_type: str
     admins: list
+    issue_chat: str
 
 
 @dataclass
@@ -76,7 +77,8 @@ config: Config = Config(
     bot=TgBot(
         token=env.str("BOT_TOKEN"),
         fsm_type=env.str("FSM_MODE"),
-        admins=env.list("BOT_ADMINS", subcast=int)
+        admins=env.list("BOT_ADMINS", subcast=int),
+        issue_chat=env.str("ISSUE_CHAT")
     ),
     redis=RedisConfig(
         host=env.str("REDIS_HOST"),
