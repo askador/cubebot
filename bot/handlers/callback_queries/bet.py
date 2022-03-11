@@ -44,6 +44,7 @@ async def bet(
         numbers=number
     ))
     await session.commit()
+    await cb.answer()
 
     await cb.message.answer(i18n.t(
         'commands.bet', 
@@ -58,7 +59,6 @@ async def bet(
     await analytics.action(cb.message.chat.id, EventAction.SEND_MESSAGE)
     
 
-    await cb.answer()
     await analytics.action(cb.message.chat.id,EventAction.CALLBACK_QUERY_ANSWER)
 
 def register(dp: Dispatcher):

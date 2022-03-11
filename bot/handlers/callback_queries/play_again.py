@@ -38,9 +38,9 @@ async def play_again(
 
     session.add(Game(chat_id=chat_id))
     await session.commit()
+    await cb.answer()
 
     await cb.message.answer(i18n.t('commands.game.message'), reply_markup=new_game_kb(i18n.language_key))
-    await cb.answer()
     await analytics.action(chat_id, EventAction.SEND_MESSAGE)
 
 

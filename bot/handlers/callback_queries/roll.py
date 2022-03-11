@@ -34,6 +34,7 @@ async def cb_roll(
 
     await session.execute(update(Game).where(Game.chat_id == chat_id).values({"is_rolling": True}))
     await session.commit()
+    await cb.answer()
 
     dice_msg = await cb.message.answer_dice("🎲")
     await analytics.action(chat_id, events.EventAction.SEND_MESSAGE)
@@ -44,7 +45,6 @@ async def cb_roll(
     results += await process_bets(number, chat_id, session, i18n)
 
     await cb.message.answer(results, reply_markup=play_again_kb(i18n.language_key))
-    await cb.answer()
     await analytics.action(chat_id, events.EventAction.SEND_MESSAGE)
 
 
