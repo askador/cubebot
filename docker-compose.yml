@@ -10,17 +10,18 @@ services:
         restart: unless-stopped
         depends_on:
             - postgresql
+            - influxdb
         volumes:
             - /home/cubebot_data/:/cubebot
 
     postgresql:
         container_name: postgresql
         image: postgres:14.1
-        restart: unless-stopped
+        restart: always
         ports:
             - '5432 :5432'
         volumes:
-            - pg_data:/var/lib/postgresql/data
+            - /home/cubebot_data/pg_data:/var/lib/postgresql/data
         environment:
             POSTGRES_DB: ${DB_NAME}
             POSTGRES_USER: ${DB_USER}
@@ -31,8 +32,27 @@ services:
             interval: 10s
             timeout: 5s
             retries: 5
-            start_period: 10s
+
+    influxdb:
+        image: influxdb:1.8-alpine
+        container_name: influxdb
+        restart: always
+        ports:
+            - '8086:8086'
+        # env_file: .env
+        volumes:
+            - /home/cubebot_data/influxdb_data:/var/lib/influxdb
+        environment:
+            INFLUXDB_DB: ${INFLUXDB_DATABASE}
+            INFLUXDB_USER: ${INFLUXDB_USER}
+            INFLUXDB_USER_PASSWORD: ${INFLUXDB_PASSWORD}
+            INFLUXDB_ADMIN_ENABLED: true
+            INFLUXDB_ADMIN_USER: admin 
+            INFLUXDB_ADMIN_PASSWORD: password 
+
+
 
 volumes:
+    influxdb_data:
     pg_data:
-    /home/cubebot_data/:
+    cubebot_data:
