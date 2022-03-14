@@ -19,7 +19,7 @@ services:
         image: postgres:14.1
         restart: always
         ports:
-            - '5432 :5432'
+            - '5432:5432'
         volumes:
             - /home/cubebot_data/pg_data:/var/lib/postgresql/data
         environment:
