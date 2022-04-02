@@ -21,7 +21,7 @@ class IsBet(BoundFilter):
 
         bets = []
         for bet in text:
-            amount, numbers = bet.split()
+            amount, *args, numbers = bet.split()
             amount = amount.replace('_', '').replace(',', '')
             if amount == '':    # check if bet is not like '__ 1' 
                 return False

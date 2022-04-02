@@ -90,7 +90,7 @@ config: Config = Config(
         host=env.str('INFLUXDB_HOST'),
         port=env.int('INFLUXDB_PORT'),
         database=env.str("INFLUXDB_DATABASE"),
-        username=env.str("INFLUXDB_USERNAME"),
+        username=env.str("INFLUXDB_USER"),
         password=env.str("INFLUXDB_PASSWORD")
     ),
     db=Database(
